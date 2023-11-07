@@ -1,6 +1,7 @@
 # Project Proposal
 ## Names, Majors, and Years
-### Luke Rowe, CSC, Grad Student
+Luke Rowe, CSC, Grad Student
+Jeremiah Lee, CSC, 5th-Year
 ### TODO: add names, major, year
 
 ## TODO: Proposed Project Name
