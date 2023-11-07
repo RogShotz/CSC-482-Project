@@ -6,7 +6,7 @@ Jeremiah Lee, CSC, 5th-Year
 
 Brandon Kwe, CSC, Grad Student
 
-Yaniv Shgy, CSC, 4th-Year
+Yaniv Sagy, CSC, 4th-Year
 
 ## Geneology Extractor
 We thought that this project sounded like fun.
