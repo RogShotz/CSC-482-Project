@@ -21,7 +21,7 @@ We all felt that this project would engage us and would be a great problem to so
 To begin, we plan on gathering data from Wikipedia. Many Wikipedia articles on individual contain a "Personal Life" section which often contains familial relationships. We could scrape Wikipedia for these sections and label them with what relationships they contain, which could then be used to train a model for outputting familial relationships in text. This model could be tested with data from Wikidata which would allow us to download the information in a machine-parsable format like JSON. If we manage to get a model working well with this data, we could then move to something more difficult like novels where relationships are often not as explicitly stated and the number of family members in the family tree would be significantly greater.
 
 ## Possible System Design
-![System Design](Diagram.drawio.png)
+![System Design](SystemDesign.drawio.png)
 
 ## Preliminary Tools and Libraries
 Spacy or NLTK to do tokenization and handle input string.
