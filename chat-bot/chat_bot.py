@@ -1,5 +1,6 @@
 from IRC import IRC
 import sys
+import time
 
 # IRC Config
 server = "irc.libera.chat" 	# Provide a valid server IP/Hostname
@@ -13,27 +14,43 @@ botpass = ""			# in case you have a registered bot
 def main():
     irc = IRC()
     irc.connect(server, port, channel, botnick, botpass, botnickpass)
-
+    start_time = time.time()
     while True:
+        print('waiting...', end='')
         text = irc.get_response()
-        print("RECEIVED ==> ", text)
+        # print("RECEIVED ==> ", text)
         sender, m_type, m_tar, msg = response_filter(text)
         if not sender:  # If the result of response_filter gives None it was no good.
+            print('rejected')
             continue
-        print(f'accepted text: {msg}')
+        if msg != 'dev-pass':
+            print(f'accepted: {msg}')
 
-        # General if elif block for commands
-        if msg == 'die':
+        # dev messages for internal passing, then general chat messages
+        if msg == 'dev-pass':
+            print('passed')
+            if time.time() - start_time >= 15:
+                irc.send(channel, f"{sender}: TIMER UP")
+            # special dev-pass case, used to not block socket for responses
+            start_time = time.time()
+        elif msg == 'dev-join':
+            # add 5 for the approximate time for server latency/ actualy bot joining speeds
+            start_time = time.time() + 5
+        elif msg == 'die':
             irc.send(channel, f"{sender}: really? OK, fine.")
             irc.command("QUIT")
             sys.exit()
+        elif msg == 'forget':
+            irc.send(
+                channel, f"{sender}: forgetting everything")
+            start_time = time.time()
+            continue
         elif msg == 'who are you?' or msg == 'usage':
             irc.send(
                 channel, f"{sender}: My name is pog-bot. I was created by Luke Rowe, Brandon Kwe, Yaniv Sagy, and Jeremiah Lee, CSC 482-03")
             # TODO: Update when done with phase 3
             irc.send(
                 channel, f"{sender}: I can answer questions about mice! Ask me a question like this: 'Can a mouse defeat a cat in battle?'")
-            pass
         elif msg == 'users':
             users = user_list(irc)
             irc.send(channel, f"{sender}: {users}")
@@ -48,6 +65,9 @@ def response_filter(text: str):
     """
     text_p = []  # sender, type, target, message
     # everything after 3 is a part of the message
+
+    if ':pog-bot MODE pog-bot :+iw' in text:
+        text = ':Guest35!~Guest35@2600:8800:15:3700::18a4 PRIVMSG #CSC482 :pog-bot: dev-join'
     for t in text.split(maxsplit=3):
         text_p.append(t)
 
