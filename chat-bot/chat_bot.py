@@ -2,6 +2,7 @@ from IRC import IRC
 import sys
 import time
 import random
+from phase_3 import luke_bot
 
 # IRC Config
 server = "irc.libera.chat" 	# Provide a valid server IP/Hostname
@@ -115,6 +116,12 @@ def main():
         elif msg == 'users':
             users = user_list(irc)
             irc.send(channel, f"{sender}: {users}")
+        else:
+            phase_3(irc, msg, sender)
+
+def phase_3(irc, msg, sender, channel=channel):
+    luke_bot.luke_bot(irc, msg, sender, channel)
+
 
 def response_filter(text: str):
     """
