@@ -1,6 +1,7 @@
 from IRC import IRC
 import sys
 import time
+import random
 
 # IRC Config
 server = "irc.libera.chat" 	# Provide a valid server IP/Hostname
@@ -9,12 +10,26 @@ channel = "#CSC482"
 botnick = "pog-bot"
 botnickpass = ""		# in case you have a registered nickname
 botpass = ""			# in case you have a registered bot
+states = ['START',  # 1 indicates first bot speaker, 2 indicates second bot speaker
+          '1_INITIAL_OUTREACH',
+          '1_SECONDARY_OUTREACH',
+          '1_GIVEUP_FRUSTRATED',
+          '1_INQUIRY',
+          '1_INQUIRY_REPLY',
+          '2_OUTREACH_REPLY',
+          '2_INQUIRY',
+          '2_GIVEUP_FRUSTRATED',
+          '2_INQUIRY_REPLY',
+          'END']
 
 
 def main():
     irc = IRC()
     irc.connect(server, port, channel, botnick, botpass, botnickpass)
     start_time = time.time()
+    state = states[0]
+    convo_target = ''
+
     while True:
         print('waiting...', end='')
         text = irc.get_response()
@@ -26,16 +41,47 @@ def main():
         if msg != 'dev-pass':
             print(f'accepted: {msg}')
 
-        # dev messages for internal passing, then general chat messages
+        # dev messages for internal passing additionally timeout related conversations
         if msg == 'dev-pass':
             print('passed')
-            if time.time() - start_time >= 15:
-                irc.send(channel, f"{sender}: TIMER UP")
-            # special dev-pass case, used to not block socket for responses
-            start_time = time.time()
+            if time.time() - start_time >= 5:
+                if state == 'START':  # for targetting a person for conversation
+                    u_list = user_list(irc).split(', ')
+                    u_list.remove('pog-bot')
+                    convo_target = random.choice(u_list)
+                    irc.send(channel, f"{convo_target}: Hello :)")
+                    state = states[1]
+                elif state == states[1]:
+                    irc.send(channel, f"{convo_target}: You there? ;(")
+                    state = states[2]
+                elif state == states[2]:
+                    irc.send(
+                        channel, f"{convo_target}: Fine, I didn't wanna talk anyways :(")
+                    state = states[3]
+                elif state == states[3] or state == states[9]:
+                    state == 'END'
+                elif state == 'END':
+                    state = 'START'
+                start_time = time.time()
+        #bot is talker 1
+        #TODO: make talker 1
+        #bot is talker 2
+        elif (msg == 'hello back at you!' or msg == 'hi') and states.index(state) <= 2:
+            speech_choice = random.choice(['how are you?', "what's happening?"])
+            irc.send(channel, f"{convo_target}: {speech_choice}")
+            state = states[6]
+        elif (msg == "i'm good" or msg == "i'm fine") and state == states[6]:
+            state = states[7]
+        elif (msg == 'how about you?' or msg == 'and yourself?') and state == states[7]:
+            speech_choice = random.choice(["I’m good", "I'm fine, thanks for asking"])
+            irc.send(channel, f"{convo_target}: {speech_choice}")
+            state = states[9]
         elif msg == 'dev-join':
             # add 5 for the approximate time for server latency/ actualy bot joining speeds
             start_time = time.time() + 5
+        # bot-commands
+        elif (msg == 'hi' or msg == 'hello'):
+            irc.send(channel, f"{sender}: Wazzaaaaaaap")
         elif msg == 'die':
             irc.send(channel, f"{sender}: really? OK, fine.")
             irc.command("QUIT")
@@ -44,6 +90,7 @@ def main():
             irc.send(
                 channel, f"{sender}: forgetting everything")
             start_time = time.time()
+            state = states[0]
             continue
         elif msg == 'who are you?' or msg == 'usage':
             irc.send(
@@ -54,9 +101,6 @@ def main():
         elif msg == 'users':
             users = user_list(irc)
             irc.send(channel, f"{sender}: {users}")
-        elif msg == 'hi' or msg == 'hello':
-            irc.send(channel, f"{sender}: Wazzaaaaaaap")
-
 
 def response_filter(text: str):
     """
@@ -87,7 +131,7 @@ def response_filter(text: str):
     text_p[3] = text_p[3][len(botnick)+3:].rstrip()
 
     # vals to make processing easier
-    return text_p[0], text_p[1], text_p[2], text_p[3]
+    return text_p[0], text_p[1], text_p[2], text_p[3].lower()
 
 
 def user_list(irc: IRC):
