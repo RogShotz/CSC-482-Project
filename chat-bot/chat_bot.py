@@ -33,54 +33,69 @@ def main():
     while True:
         print('waiting...', end='')
         text = irc.get_response()
-        # print("RECEIVED ==> ", text)
         sender, m_type, m_tar, msg = response_filter(text)
+        # Timer must go before rejection so that it is being updated per timeout as well.
+        if msg == 'dev-pass':
+            print(f'passed: {state}')
+        if time.time() - start_time >= 15:
+            if state == 'START':  # For targetting a person for conversation.
+                u_list = user_list(irc).split(', ')
+                u_list.remove('pog-bot')
+                convo_target = random.choice(u_list)
+                irc.send(channel, f"{convo_target}: Hello :)")
+                state = states[1]
+            elif state == states[1]:
+                irc.send(channel, f"{convo_target}: You there? ;(")
+                state = states[2]
+            elif state == states[2] or state == states[4] or state == states[6] or state == states[7]:
+                irc.send(
+                    channel, f"{convo_target}: Fine, I didn't wanna talk anyways :(")
+                state = states[3]
+            elif state == states[3] or state == states[5]:
+                state = 'START' # reset
+            start_time = time.time()
         if not sender:  # If the result of response_filter gives None it was no good.
             print('rejected')
             continue
+        
         if msg != 'dev-pass':
             print(f'accepted: {msg}')
 
-        # dev messages for internal passing additionally timeout related conversations
-        if msg == 'dev-pass':
-            print('passed')
-            if time.time() - start_time >= 5:
-                if state == 'START':  # for targetting a person for conversation
-                    u_list = user_list(irc).split(', ')
-                    u_list.remove('pog-bot')
-                    convo_target = random.choice(u_list)
-                    irc.send(channel, f"{convo_target}: Hello :)")
-                    state = states[1]
-                elif state == states[1]:
-                    irc.send(channel, f"{convo_target}: You there? ;(")
-                    state = states[2]
-                elif state == states[2]:
-                    irc.send(
-                        channel, f"{convo_target}: Fine, I didn't wanna talk anyways :(")
-                    state = states[3]
-                elif state == states[3] or state == states[9]:
-                    state == 'END'
-                elif state == 'END':
-                    state = 'START'
-                start_time = time.time()
-        #bot is talker 1
-        #TODO: make talker 1
-        #bot is talker 2
+        # Bot is talker 1.
+        if (msg == 'hi' or msg == 'hello') and state == states[0]:
+            convo_target = sender
+            speech_choice = random.choice(['hi', "hello back at you!"])
+            irc.send(channel, f"{convo_target}: {speech_choice}")
+            state = states[6]
+            start_time = time.time()
+        elif (msg == 'how are you?' or msg == "what's happening?") and state == states[6]:
+            speech_choice = random.choice(["I'm good", "I'm fine"])
+            irc.send(channel, f"{convo_target}: {speech_choice}")
+            speech_choice = random.choice(["how about you?", "and yourself?"])
+            irc.send(channel, f"{convo_target}: {speech_choice}")
+            state = states[7]
+            start_time = time.time()
+        elif (msg == "i'm good" or msg == "i'm fine, thanks for asking") and state == states[7]:
+            state = states[5]
+            start_time = time.time()
+        # Bot is talker 2.
         elif (msg == 'hello back at you!' or msg == 'hi') and states.index(state) <= 2:
             speech_choice = random.choice(['how are you?', "what's happening?"])
             irc.send(channel, f"{convo_target}: {speech_choice}")
-            state = states[6]
-        elif (msg == "i'm good" or msg == "i'm fine") and state == states[6]:
-            state = states[7]
-        elif (msg == 'how about you?' or msg == 'and yourself?') and state == states[7]:
+            state = states[4]
+            start_time = time.time()
+        elif (msg == "i'm good" or msg == "i'm fine") and state == states[4]:
+            state = states[9]
+            start_time = time.time()
+        elif (msg == 'how about you?' or msg == 'and yourself?') and state == states[9]:
             speech_choice = random.choice(["I’m good", "I'm fine, thanks for asking"])
             irc.send(channel, f"{convo_target}: {speech_choice}")
-            state = states[9]
+            state = states[5]
+            start_time = time.time()
         elif msg == 'dev-join':
-            # add 5 for the approximate time for server latency/ actualy bot joining speeds
-            start_time = time.time() + 5
+            start_time = time.time() + 5 # Add 5 for the approximate time for server latency/ actualy bot joining speeds.
         # bot-commands
-        elif (msg == 'hi' or msg == 'hello'):
+        elif (msg == 'hi' or msg == 'hello'): # If hi or hello occurs and its not in any of the states make it its own command
             irc.send(channel, f"{sender}: Wazzaaaaaaap")
         elif msg == 'die':
             irc.send(channel, f"{sender}: really? OK, fine.")
@@ -91,7 +106,6 @@ def main():
                 channel, f"{sender}: forgetting everything")
             start_time = time.time()
             state = states[0]
-            continue
         elif msg == 'who are you?' or msg == 'usage':
             irc.send(
                 channel, f"{sender}: My name is pog-bot. I was created by Luke Rowe, Brandon Kwe, Yaniv Sagy, and Jeremiah Lee, CSC 482-03")
