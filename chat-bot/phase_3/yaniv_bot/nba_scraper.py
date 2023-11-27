@@ -43,8 +43,8 @@ def scrape_nba_data():
                     'arena': arena
                 })
 
-    nba_df = pd.DataFrame(rows)
-    nba_df.to_csv('nba_data.csv')
+    df_nba = pd.DataFrame(rows)
+    df_nba.to_csv('nba_data.csv')
 
 if __name__ == '__main__':
     scrape_nba_data()
