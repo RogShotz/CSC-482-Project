@@ -20,7 +20,7 @@ def yaniv_bot(irc, msg, sender, channel):
         pass
     return
 
-msg = "Who did the Hawks play on 06/2021"
+msg = "Who did the Hawks play on 06/11/2021"
 
 df_nba = pd.read_csv('nba_data.csv')
 
@@ -89,7 +89,7 @@ elif lemmatizer.lemmatize(verb) in ('play', 'played'):
             else:
                 lose_count += 1
 
-        message_content = f'The {team_name} played {len(relevant_nba_data)} games {preposition} {date}. They won {win_count} games and lost {lose_count} games during this time. The final scores were as follows:\n' + message_content
+        message_content = f'The {team_name} played {len(relevant_nba_data)} game(s) {preposition} {date}. They won {win_count} game(s) and lost {lose_count} game(s) during this time. The final scores were as follows:\n' + message_content
 else:
     message_content = 'Sorry, I don\'t understand your question :(. Please try to rephrase it!'
 
