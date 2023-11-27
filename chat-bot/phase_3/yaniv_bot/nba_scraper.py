@@ -34,7 +34,9 @@ def scrape_nba_data():
                 arena = data_cells[8].text
 
                 rows.append({
-                    'date': date,
+                    'day': date[6:8],
+                    'month': date[4:6],
+                    'year': date[:4],
                     'visitor_team': visitor_team,
                     'visitor_team_points': visitor_team_points,
                     'home_team': home_team,
