@@ -2,7 +2,7 @@ from IRC import IRC
 import sys
 import time
 import random
-from phase_3 import luke_bot
+from phase_3 import luke_bot, yaniv_bot
 
 # IRC Config
 server = "irc.libera.chat" 	# Provide a valid server IP/Hostname
@@ -58,7 +58,7 @@ def main():
         if not sender:  # If the result of response_filter gives None it was no good.
             print('rejected')
             continue
-        
+
         if msg != 'dev-pass':
             print(f'accepted: {msg}')
 
@@ -121,6 +121,7 @@ def main():
 
 def phase_3(irc, msg, sender, channel=channel):
     luke_bot.luke_bot(irc, msg, sender, channel)
+    yaniv_bot.yaniv_bot(irc, msg, sender, channel)
 
 
 def response_filter(text: str):
