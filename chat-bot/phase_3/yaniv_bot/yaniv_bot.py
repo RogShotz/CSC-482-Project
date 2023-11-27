@@ -20,7 +20,7 @@ def yaniv_bot(irc, msg, sender, channel):
         pass
     return
 
-msg = "Who did the Hawks play on 06/11/2021"
+msg = "To which team did Golden State lose to on 06/2016"
 
 df_nba = pd.read_csv('nba_data.csv')
 
@@ -48,6 +48,7 @@ for token in doc:
 team_name = [name for name in nba_team_names if propn in name.lower()][0]
 
 date_components = date.split('/')
+preposition = 'in' if len(date) == 4 else 'on'
 if len(date_components) == 3:
     month, day, year = date_components
     df_nba = df_nba[(df_nba['month'] == int(month)) & (df_nba['day'] == int(day)) & (df_nba['year'] == int(year))]
@@ -63,19 +64,50 @@ relevant_nba_data = None
 if lemmatizer.lemmatize(verb) in ('beat', 'win', 'won', 'defeated', 'defeat'):
     if verb_executor:
         relevant_nba_data = df_nba[((df_nba['visitor_team'].str.contains(team_name)) & (df_nba['visitor_team_points'] > df_nba['home_team_points'])) | ((df_nba['home_team'].str.contains(team_name)) & (df_nba['home_team_points'] > df_nba['visitor_team_points']))]
+
+        if len(relevant_nba_data) == 0:
+            message_content = f'It appears that the {team_name} didn\'t win any games {preposition} {date}.'
+        else:
+            for index, row in relevant_nba_data.iterrows():
+                message_content += f"{row['home_team']} ({int(row['home_team_points'])}) - {row['visitor_team']} ({int(row['visitor_team_points'])})\n"
+
+            message_content = f'The {team_name} won {len(relevant_nba_data)} game(s) {preposition} {date}. The opponents and final scores were:\n' + message_content
     else:
         relevant_nba_data = df_nba[((df_nba['visitor_team'].str.contains(team_name)) & (df_nba['visitor_team_points'] < df_nba['home_team_points'])) | ((df_nba['home_team'].str.contains(team_name)) & (df_nba['home_team_points'] < df_nba['visitor_team_points']))]
-    # return message
+
+        if len(relevant_nba_data) == 0:
+            message_content = f'It appears that the {team_name} didn\'t lose any games {preposition} {date}.'
+        else:
+            for index, row in relevant_nba_data.iterrows():
+                message_content += f"{row['home_team']} ({int(row['home_team_points'])}) - {row['visitor_team']} ({int(row['visitor_team_points'])})\n"
+
+            message_content = f'The {team_name} lost {len(relevant_nba_data)} game(s) {preposition} {date}. The opponents and final scores were:\n' + message_content
+
 elif lemmatizer.lemmatize(verb) in ('lose', 'lost', 'fall', 'fell'):
     if verb_executor:
         relevant_nba_data = df_nba[((df_nba['visitor_team'].str.contains(team_name)) & (df_nba['visitor_team_points'] < df_nba['home_team_points'])) | ((df_nba['home_team'].str.contains(team_name)) & (df_nba['home_team_points'] < df_nba['visitor_team_points']))]
+
+        if len(relevant_nba_data) == 0:
+            message_content = f'It appears that the {team_name} didn\'t lose any games {preposition} {date}.'
+        else:
+            for index, row in relevant_nba_data.iterrows():
+                message_content += f"{row['home_team']} ({int(row['home_team_points'])}) - {row['visitor_team']} ({int(row['visitor_team_points'])})\n"
+
+            message_content = f'The {team_name} lost {len(relevant_nba_data)} game(s) {preposition} {date}. The opponents and final scores were:\n' + message_content
     else:
         relevant_nba_data = df_nba[((df_nba['visitor_team'].str.contains(team_name)) & (df_nba['visitor_team_points'] > df_nba['home_team_points'])) | ((df_nba['home_team'].str.contains(team_name)) & (df_nba['home_team_points'] > df_nba['visitor_team_points']))]
-    # return message
+
+        if len(relevant_nba_data) == 0:
+            message_content = f'It appears that the {team_name} didn\'t win any games {preposition} {date}.'
+        else:
+            for index, row in relevant_nba_data.iterrows():
+                message_content += f"{row['home_team']} ({int(row['home_team_points'])}) - {row['visitor_team']} ({int(row['visitor_team_points'])})\n"
+
+            message_content = f'The {team_name} won {len(relevant_nba_data)} game(s) {preposition} {date}. The opponents and final scores were:\n' + message_content
+
 elif lemmatizer.lemmatize(verb) in ('play', 'played'):
     relevant_nba_data = df_nba[df_nba['visitor_team'].str.contains(team_name) | df_nba['home_team'].str.contains(team_name)]
 
-    preposition = 'in' if len(date) == 4 else 'on'
     if len(relevant_nba_data) == 0:
         message_content = f'It appears that the {team_name} didn\'t play {preposition} {date}. Please ask another question!'
     else:
@@ -89,7 +121,7 @@ elif lemmatizer.lemmatize(verb) in ('play', 'played'):
             else:
                 lose_count += 1
 
-        message_content = f'The {team_name} played {len(relevant_nba_data)} game(s) {preposition} {date}. They won {win_count} game(s) and lost {lose_count} game(s) during this time. The final scores were as follows:\n' + message_content
+        message_content = f'The {team_name} played {len(relevant_nba_data)} game(s) {preposition} {date}. They won {win_count} game(s) and lost {lose_count} game(s) during this time. The final scores were:\n' + message_content
 else:
     message_content = 'Sorry, I don\'t understand your question :(. Please try to rephrase it!'
 
