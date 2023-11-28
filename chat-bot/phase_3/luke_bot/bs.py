@@ -35,6 +35,7 @@ def main():  # TODO: fun facts?
             if clean_info:
                 # [c] == lack of political parties, [d], [g], [l] == diff party as P and VP, [e] == death in office, [f], [n] == new party, [h] = resigned
                 # [j] == expelled from party, [t] = new VP
+                # replaces any off charcters with tokens
                 pres_clean.append(re.sub(r'\[[a-zA-z]\]', '',
                                     clean_info.replace(
                                     '\n\n', '<--->').replace('\n', '<-->')
@@ -60,6 +61,7 @@ def main():  # TODO: fun facts?
 
 
 def cleaner(pres_arr):
+    """Sanitizes president data to be sent to a CSV"""
     clean_arr = []
     for pres in pres_arr:
         pres_num = int(pres[0])

@@ -26,7 +26,11 @@ The bot has a state system that it goes through, using the flowchart provided to
 
 ## Individual Reports
 ### Luke Rowe
-TODO:
+My contribution was having a q/a bot that answers any prompt with a `who` and `pres` in the message. It will then extract any number in the text and look for the president who corresponds with the number. From there I use BS4 to strip a wiki list of all components including `[pres_num, pres_name, pres_birth, pres_death, pres_term, pres_party, pres_election, pres_VP]`. With this data the bot extracts all info, including small little bonus things including in the wiki including `[c] == lack of political parties, [d], [g], [l] == diff party as P and VP, [e] == death in office, [f], [n] == new party, [h] = resigned, [j] == expelled from party, [t] = new VP`. This is displayed to the user in a bracketed text and was not further extrapolated due to the nature that I did not want to write 10+ if statements with new sentence parameters since I had already done that for about 5 hours total. I also implemented my own dictionary with the relative terms for first second, etc up to 99. I thought of a pretty clever NLP strategy to automate what each number correlates to.
+
+In addition I added the function to query the bot with `tell me more about {pres name}` and any name even if shortened will respond with more info about presidents with that name, i.e. bill clinton for `bill`, or all the georges for `george`, etc. 
+
+In relation to our project I feel that navigating wiki, keying information, and reporting it all to a localized csv helps us a lot so that we can gather genelogical data easily. Additionally I went beyond the scope of the project to make sure that the bot cleans any data that we do not want, has local dev related messages it can parse through, and does not block on any given waited input to make sure that the bot progresses. I will admit a large part of the time I committed to this bot was spent on developing the bot. I have previous chat-bot experience as an employee making discord-bots so I wanted to make it up to the standards we had back then.
 ### Jerimiah Lee
 TODO:
 ### Brandon Kwe
