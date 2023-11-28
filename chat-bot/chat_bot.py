@@ -43,6 +43,8 @@ def main():
         if time.time() - start_time >= 15:
             if state == 'START':  # For targetting a person for conversation.
                 u_list = user_list(irc).split(', ')
+                if not u_list:  # incase we u_lists response gets missed
+                    continue
                 u_list.remove(botnick)
                 convo_target = random.choice(u_list)
                 irc.send(channel, f"{convo_target}: Hello :)")
@@ -55,7 +57,7 @@ def main():
                     channel, f"{convo_target}: Fine, I didn't wanna talk anyways :(")
                 state = states[3]
             elif state == states[3] or state == states[5]:
-                state = 'START' # reset
+                state = 'START'  # reset
             start_time = time.time()
         if not sender:  # If the result of response_filter gives None it was no good.
             print('rejected')
@@ -83,7 +85,8 @@ def main():
             start_time = time.time()
         # Bot is talker 2.
         elif (msg == 'hello back at you!' or msg == 'hi') and states.index(state) <= 2:
-            speech_choice = random.choice(['how are you?', "what's happening?"])
+            speech_choice = random.choice(
+                ['how are you?', "what's happening?"])
             irc.send(channel, f"{convo_target}: {speech_choice}")
             state = states[4]
             start_time = time.time()
@@ -91,14 +94,17 @@ def main():
             state = states[9]
             start_time = time.time()
         elif (msg == 'how about you?' or msg == 'and yourself?') and state == states[9]:
-            speech_choice = random.choice(["I’m good", "I'm fine, thanks for asking"])
+            speech_choice = random.choice(
+                ["I’m good", "I'm fine, thanks for asking"])
             irc.send(channel, f"{convo_target}: {speech_choice}")
             state = states[5]
             start_time = time.time()
         elif msg == 'dev-join':
-            start_time = time.time() + 5 # Add 5 for the approximate time for server latency/ actualy bot joining speeds.
+            # Add 5 for the approximate time for server latency/ actualy bot joining speeds.
+            start_time = time.time() + 5
         # bot-commands
-        elif (msg == 'hi' or msg == 'hello'): # If hi or hello occurs and its not in any of the states make it its own command
+        # If hi or hello occurs and its not in any of the states make it its own command
+        elif (msg == 'hi' or msg == 'hello'):
             irc.send(channel, f"{sender}: Wazzaaaaaaap")
         elif msg == 'die':
             irc.send(channel, f"{sender}: really? OK, fine.")
@@ -112,15 +118,19 @@ def main():
         elif msg == 'who are you?' or msg == 'usage':
             irc.send(
                 channel, f"{sender}: My name is {botnick}. I was created by Luke Rowe, Brandon Kwe, Yaniv Sagy, and Jeremiah Lee, CSC 482-03")
-            # TODO: Update when done with phase 3
             irc.send(
-                channel, f"{sender}: I can answer questions about mice! Ask me a question like this: 'Can a mouse defeat a cat in battle?'")
+                channel, f"{sender}: Luke's Q/A can be used by asking a question with `who` and `president` along with `a number` that can be both numerical or ordinal, i.e. first, second, third.")
             irc.send(
-                channel, f"{sender}: I can also answer questions about birthdays. Just ask: 'When was [name] born?")
+                channel, f"{sender}: It can also be queried by saying `tell me more about ` and a presidents name you want, it can be impercise.")
+            irc.send(
+                channel, f"{sender}: Brandon's Q/A can also answer questions about birthdays. Just ask: 'When was [name] born?")
+            irc.send(
+                channel, f"{sender}: Yaniv's Q/A can also answer questions about NBA game outcomes between the 2015 season to the 2022 season.")
+            irc.send(channel, f"{sender}: Just ask questions along the lines of: `NBA: Who [beat/won against/defeated/lost to/lost against/fell to] [NBA team] on [date]?`, `NBA: Who did [NBA team] [beat/win against/defeat/lose to/fall to] on [date]?`, `NBA: Who did [NBA team] play against on [date]?`, or `NBA: Who played against [NBA team] on [date]?` The dates can be entered in one of the following forms: `MM/DD/YYYY`, `MM/YYYY`, or `YYYY`.")
         elif msg == 'users':
             users = user_list(irc)
             irc.send(channel, f"{sender}: {users}")
-        elif msg != 'dev-pass':
+        elif msg != 'dev-pass' and state == 'START':
             phase_3(irc, msg, sender)
 
 

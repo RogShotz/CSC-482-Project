@@ -1,5 +1,4 @@
 from bs4 import BeautifulSoup
-from lxml import etree
 import requests
 import csv
 import re
@@ -37,8 +36,8 @@ def main():  # TODO: fun facts?
                 # [j] == expelled from party, [t] = new VP
                 # replaces any off charcters with tokens
                 pres_clean.append(re.sub(r'\[[a-zA-z]\]', '',
-                                    clean_info.replace(
-                                    '\n\n', '<--->').replace('\n', '<-->')
+                                         clean_info.replace(
+                                             '\n\n', '<--->').replace('\n', '<-->')
                                   .replace('–', '<->').replace('[c]', '<noparties>')
                                   .replace('[d]', '<diffpparty>').replace('[e]', '<death>')
                                   .replace('[f]', '<newparty>').replace('[g]', '<diffparty>')
@@ -84,8 +83,9 @@ def cleaner(pres_arr):
         pres_election = '|'.join(sep_list).replace('<-->', '')
         sep_list = pres[5].split('<--->')
         pres_VP = '|'.join(sep_list)
-        pres_VP = pres_VP.replace(':', ': ').replace('\xa0', ': ').replace('through', 'through ').replace('after', 'after ').replace('through out', 'throughout ') #replaces odd : char with normal one
-        pres_VP = pres_VP.replace(': <->', ':') #odd richard nixon moment
+        pres_VP = pres_VP.replace(':', ': ').replace('\xa0', ': ').replace('through', 'through ').replace(
+            'after', 'after ').replace('through out', 'throughout ')  # replaces odd : char with normal one
+        pres_VP = pres_VP.replace(': <->', ':')  # odd richard nixon moment
         pres_VP = pres_VP.replace('<-->', '')
         clean_arr.append([pres_num, pres_name, pres_birth, pres_death,
                          pres_term, pres_party, pres_election, pres_VP])
