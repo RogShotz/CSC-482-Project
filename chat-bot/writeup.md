@@ -34,7 +34,10 @@ In relation to our project I feel that navigating wiki, keying information, and 
 ### Jerimiah Lee
 TODO:
 ### Brandon Kwe
-TODO:
+For Phase III, I gave our bot the ability to answer the question "When was *name* born?", *name* being the name of a famous person, historical figure, and some famous animals. This question works first by parsing the name of the person out from the IRC message. This name is then passed to the Wikipedia api call which returns the summary section of the Wikipedia article. I then use some string manipulation to strip the return string of everything but the date of birth. If the input message does not yield a valid date of birth either because the name is ambiguous or is not a person with a Wikipedia entry, the bot responds with a message indicating such: "I'm sorry, I'm not sure when *name* was born.".
+
+Some sample names I tested with and know work:
+"Xi Jinping", "Donald Trump", "Bill Burr", "Jesus Christ", "Julius Caesar", "RBG", "Mike Trout", "Winston Churchill", "Shakespeare", "Koko gorilla", "Phil Ivey"
 ### Yaniv Sagy
 For Phase III, I created an NBA data feature where the bot can respond to questions such as "NBA: Which team did [NBA team] win against on [date]?" or "NBA: Who lost to [NBA team] on [date]?". I initially wrote a Python script that used BeautifulSoup to parse a variety of NBA game data from basketball-reference.com that spanned across multiple years. I collected data such as the home team and visiting team, the points they each scored, the stadium they played in, and the amount of fans in attendance, and wrote the data to a CSV file that has been saved as nba_data.csv.
 
