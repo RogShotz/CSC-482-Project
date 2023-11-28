@@ -2,7 +2,9 @@ from IRC import IRC
 import sys
 import time
 import random
-from phase_3 import luke_bot, yaniv_bot, brandon_bot
+#from phase_3.yaniv_bot import yaniv_bot
+from phase_3.luke_bot import luke_bot
+from phase_3.brandon_bot import brandon_bot
 
 # IRC Config
 server = "irc.libera.chat" 	# Provide a valid server IP/Hostname
@@ -41,7 +43,7 @@ def main():
         if time.time() - start_time >= 15:
             if state == 'START':  # For targetting a person for conversation.
                 u_list = user_list(irc).split(', ')
-                u_list.remove('pog-bot')
+                u_list.remove(botnick)
                 convo_target = random.choice(u_list)
                 irc.send(channel, f"{convo_target}: Hello :)")
                 state = states[1]
@@ -133,8 +135,8 @@ def response_filter(text: str):
     text_p = []  # sender, type, target, message
     # everything after 3 is a part of the message
 
-    if ':pog-bot MODE pog-bot :+iw' in text:
-        text = ':Guest35!~Guest35@2600:8800:15:3700::18a4 PRIVMSG #bkwe123 :pog-bot: dev-join'
+    if f':{botnick} MODE {botnick} :+iw' in text:
+        text = f':Guest35!~Guest35@2600:8800:15:3700::18a4 PRIVMSG {channel} :{botnick}: dev-join'
     for t in text.split(maxsplit=3):
         text_p.append(t)
 
@@ -142,7 +144,7 @@ def response_filter(text: str):
         return None, None, None, None
     if text_p[1] != 'PRIVMSG':
         return None, None, None, None
-    if text_p[2] != '#bkwe123':
+    if text_p[2] != channel:
         return None, None, None, None
     if f':{botnick}: ' not in text_p[3]:  # format for mentioning botnick
         return None, None, None, None
