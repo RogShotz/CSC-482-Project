@@ -45,7 +45,7 @@ def luke_bot(irc, msg, sender, channel):
                 channel, f"{sender}: sorry but {msg} is too short a name for me to search for.")
             return
         pres_num = -1
-    with open('stripped_pres_info.txt', 'r') as f:
+    with open('./phase_3/luke_bot/stripped_pres_info.txt', 'r') as f:
         reader = csv.reader(f)
         next(reader)  # skip header
         # 0        , 1        , 2         , 3         , 4        , 5         , 6            , 7
@@ -94,7 +94,6 @@ def parser(msg):
     try:
         msg = int(msg)
         if msg <= 0 or msg >= 48:
-            # TODO: potentially update this
             return f'Sorry but there was no president with the number {msg} yet.'
     except:
         return 'Sorry but I couldnt parse what number president you wanted.'
