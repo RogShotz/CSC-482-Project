@@ -71,3 +71,20 @@ cirque: "good night" to german is "gute nacht"
 Brandon Q/A
 pog-bot: When was Xi Jinping born?
 bkwe: 15 June 1953
+
+Yaniv Q/A
+pog-bot: NBA: Who did the Celtics beat on 12/2021?
+Guest89: The Boston Celtics won 6 game(s) on 12/2021. The opponents and final scores were:
+Guest89: Boston Celtics (88) - Philadelphia 76ers (87)
+Guest89: Portland Trail Blazers (117) - Boston Celtics (145)
+Guest89: Boston Celtics (117) - Milwaukee Bucks (103)
+Guest89: Boston Celtics (114) - New York Knicks (107)
+Guest89: Boston Celtics (111) - Cleveland Cavaliers (101)
+Guest89: Boston Celtics (123) - Phoenix Suns (108)
+
+pog-bot: NBA: Who did the Warriors play on 02/2015?
+Guest89: The Golden State Warriors played 11 game(s) on 02/2015. They won 8 game(s) and lost 3 game(s) during this time. The final scores were:
+Guest89: Sacramento Kings (96) - Golden State Warriors (121)
+Guest89: Golden State Warriors (128) - Dallas Mavericks (114)
+Guest89: Atlanta Hawks (124) - Golden State Warriors (116)
+Guest89: New York Knicks (92) - Golden State Warriors (106)
