@@ -216,13 +216,17 @@ def jeremiah_bot(irc, msg, sender, channel):
     if not source and not target:
         translation = libretranslate.translate(text)
         irc.send(
-            channel, f"\"{text}\" to English is \"{translation}\"")
+            channel, f"\"{sender}: {text}\" to English is \"{translation}\"")
         # print(f"\"{text}\" to English is \"{translation}\"")
     elif not target:
         translation = libretranslate.translate(text, source_lang=source)
         irc.send(
-            channel, f"{sender}: \"{text}\" to {lang} is \"{translation}\"")
+            channel, f"{sender}: \"{text}\" from {lang} to English is \"{translation}\"")
         # print(f"\"{text}\" to {lang} is \"{translation}\"")
+    elif not source:
+        translation = libretranslate.translate(text, target_lang=target)
+        irc.send(
+            channel, f"{sender}: \"{text}\" to {lang} is \"{translation}\"")
     else:
         translation = libretranslate.translate(text, source_lang=source, target_lang=target)
         irc.send(

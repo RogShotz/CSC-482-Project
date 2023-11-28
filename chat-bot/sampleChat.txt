@@ -1,0 +1,15 @@
+Username: cirque
+
+cirque: Hello :)
+cirque: You there? ;(
+cirque: Fine, I didn't wanna talk anyways :(
+pog-bot: die
+cirque: really? OK, fine.
+
+pog-bot: hi
+cirque: hi
+pog-bot: hi
+cirque: Wazzaaaaaaap
+
+pog-bot: Translate this into German: Good Night
+cirque: "good night" to german is "gute nacht"
