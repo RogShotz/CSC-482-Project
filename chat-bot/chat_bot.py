@@ -119,11 +119,13 @@ def main():
             irc.send(
                 channel, f"{sender}: My name is {botnick}. I was created by Luke Rowe, Brandon Kwe, Yaniv Sagy, and Jeremiah Lee, CSC 482-03")
             irc.send(
-                channel, f"{sender}: Lukes Q/A can be used by asking a question with `who` and `president` along with `a number` that can be both numerical or ordinal, i.e. first, second, third.")
+                channel, f"{sender}: Luke's Q/A can be used by asking a question with `who` and `president` along with `a number` that can be both numerical or ordinal, i.e. first, second, third.")
             irc.send(
                 channel, f"{sender}: It can also be queried by saying `tell me more about ` and a presidents name you want, it can be impercise.")
             irc.send(
-                channel, f"{sender}: Brandons Q/A can also answer questions about birthdays. Just ask: 'When was [name] born?")
+                channel, f"{sender}: Brandon's Q/A can also answer questions about birthdays. Just ask: 'When was [name] born?")
+            irc.send(
+                channel, f"{sender}: Yaniv's Q/A can also answer questions about NBA game outcomes. Just ask questions along the lines of: 'NBA: Who [beat/won against/defeated/lost to/lost against/fell to] [NBA team] on [date]?', 'NBA: Who did [NBA team] [beat/win against/defeat/lose to/fall to] on [date]?', 'NBA: Who did [NBA team] play against on [date]?', or 'NBA: Who played against [NBA team] on [date]?'")
         elif msg == 'users':
             users = user_list(irc)
             irc.send(channel, f"{sender}: {users}")

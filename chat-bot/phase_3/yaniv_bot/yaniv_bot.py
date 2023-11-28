@@ -17,9 +17,9 @@ nba_team_names = ['Atlanta Hawks', 'Boston Celtics', 'Brooklyn Nets', 'Charlotte
 lemmatizer = stem.WordNetLemmatizer()
 
 def yaniv_bot(irc, msg, sender, channel):
-    if 'NBA:' not in msg:
+    if 'nba:' not in msg:
         return
-    
+
     global df_nba
 
     doc = nlp(msg)
