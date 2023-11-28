@@ -2,7 +2,7 @@ from IRC import IRC
 import sys
 import time
 import random
-from phase_3 import luke_bot
+from phase_3.luke_bot import luke_bot
 from phase_3.yaniv_bot import yaniv_bot
 
 # IRC Config
