@@ -43,7 +43,7 @@ def main():
         if time.time() - start_time >= 15:
             if state == 'START':  # For targetting a person for conversation.
                 u_list = user_list(irc).split(', ')
-                if not u_list: # incase we u_lists response gets missed
+                if not u_list:  # incase we u_lists response gets missed
                     continue
                 u_list.remove(botnick)
                 convo_target = random.choice(u_list)
@@ -57,7 +57,7 @@ def main():
                     channel, f"{convo_target}: Fine, I didn't wanna talk anyways :(")
                 state = states[3]
             elif state == states[3] or state == states[5]:
-                state = 'START' # reset
+                state = 'START'  # reset
             start_time = time.time()
         if not sender:  # If the result of response_filter gives None it was no good.
             print('rejected')
@@ -85,7 +85,8 @@ def main():
             start_time = time.time()
         # Bot is talker 2.
         elif (msg == 'hello back at you!' or msg == 'hi') and states.index(state) <= 2:
-            speech_choice = random.choice(['how are you?', "what's happening?"])
+            speech_choice = random.choice(
+                ['how are you?', "what's happening?"])
             irc.send(channel, f"{convo_target}: {speech_choice}")
             state = states[4]
             start_time = time.time()
@@ -93,14 +94,17 @@ def main():
             state = states[9]
             start_time = time.time()
         elif (msg == 'how about you?' or msg == 'and yourself?') and state == states[9]:
-            speech_choice = random.choice(["I’m good", "I'm fine, thanks for asking"])
+            speech_choice = random.choice(
+                ["I’m good", "I'm fine, thanks for asking"])
             irc.send(channel, f"{convo_target}: {speech_choice}")
             state = states[5]
             start_time = time.time()
         elif msg == 'dev-join':
-            start_time = time.time() + 5 # Add 5 for the approximate time for server latency/ actualy bot joining speeds.
+            # Add 5 for the approximate time for server latency/ actualy bot joining speeds.
+            start_time = time.time() + 5
         # bot-commands
-        elif (msg == 'hi' or msg == 'hello'): # If hi or hello occurs and its not in any of the states make it its own command
+        # If hi or hello occurs and its not in any of the states make it its own command
+        elif (msg == 'hi' or msg == 'hello'):
             irc.send(channel, f"{sender}: Wazzaaaaaaap")
         elif msg == 'die':
             irc.send(channel, f"{sender}: really? OK, fine.")
