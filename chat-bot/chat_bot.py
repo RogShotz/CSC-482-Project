@@ -2,13 +2,14 @@ from IRC import IRC
 import sys
 import time
 import random
-from phase_3 import luke_bot, yaniv_bot
+from phase_3 import luke_bot
+from phase_3.yaniv_bot import yaniv_bot
 
 # IRC Config
 server = "irc.libera.chat" 	# Provide a valid server IP/Hostname
 port = 6667
 channel = "#CSC482"
-botnick = "pog-bot"
+botnick = "pog-bot645"
 botnickpass = ""		# in case you have a registered nickname
 botpass = ""			# in case you have a registered bot
 states = ['START',  # 1 indicates first bot speaker, 2 indicates second bot speaker
@@ -41,7 +42,7 @@ def main():
         if time.time() - start_time >= 15:
             if state == 'START':  # For targetting a person for conversation.
                 u_list = user_list(irc).split(', ')
-                u_list.remove('pog-bot')
+                u_list.remove('pog-bot645')
                 convo_target = random.choice(u_list)
                 irc.send(channel, f"{convo_target}: Hello :)")
                 state = states[1]
@@ -109,15 +110,16 @@ def main():
             state = states[0]
         elif msg == 'who are you?' or msg == 'usage':
             irc.send(
-                channel, f"{sender}: My name is pog-bot. I was created by Luke Rowe, Brandon Kwe, Yaniv Sagy, and Jeremiah Lee, CSC 482-03")
+                channel, f"{sender}: My name is pog-bot645. I was created by Luke Rowe, Brandon Kwe, Yaniv Sagy, and Jeremiah Lee, CSC 482-03")
             # TODO: Update when done with phase 3
             irc.send(
                 channel, f"{sender}: I can answer questions about mice! Ask me a question like this: 'Can a mouse defeat a cat in battle?'")
         elif msg == 'users':
             users = user_list(irc)
             irc.send(channel, f"{sender}: {users}")
-        else:
+        elif msg != 'dev-pass':
             phase_3(irc, msg, sender)
+
 
 def phase_3(irc, msg, sender, channel=channel):
     luke_bot.luke_bot(irc, msg, sender, channel)
@@ -132,8 +134,8 @@ def response_filter(text: str):
     text_p = []  # sender, type, target, message
     # everything after 3 is a part of the message
 
-    if ':pog-bot MODE pog-bot :+iw' in text:
-        text = ':Guest35!~Guest35@2600:8800:15:3700::18a4 PRIVMSG #CSC482 :pog-bot: dev-join'
+    if ':pog-bot645 MODE pog-bot645 :+iw' in text:
+        text = ':Guest35!~Guest35@2600:8800:15:3700::18a4 PRIVMSG #CSC482 :pog-bot645: dev-join'
     for t in text.split(maxsplit=3):
         text_p.append(t)
 
