@@ -1,0 +1,3 @@
+nltk
+Wikipedia-API
+pandas
