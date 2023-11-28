@@ -1,3 +1,6 @@
 re
 Wikipedia-API
 pandas
+os
+spacy
+nltk
