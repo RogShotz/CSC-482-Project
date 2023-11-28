@@ -2,12 +2,12 @@ from IRC import IRC
 import sys
 import time
 import random
-from phase_3 import luke_bot, yaniv_bot
+from phase_3 import luke_bot, yaniv_bot, brandon_bot
 
 # IRC Config
 server = "irc.libera.chat" 	# Provide a valid server IP/Hostname
 port = 6667
-channel = "#CSC482"
+channel = "#bkwe123"
 botnick = "pog-bot"
 botnickpass = ""		# in case you have a registered nickname
 botpass = ""			# in case you have a registered bot
@@ -121,7 +121,8 @@ def main():
 
 def phase_3(irc, msg, sender, channel=channel):
     luke_bot.luke_bot(irc, msg, sender, channel)
-    yaniv_bot.yaniv_bot(irc, msg, sender, channel)
+    brandon_bot.brandon_bot(irc, msg, sender, channel)
+    #yaniv_bot.yaniv_bot(irc, msg, sender, channel)
 
 
 def response_filter(text: str):
@@ -133,7 +134,7 @@ def response_filter(text: str):
     # everything after 3 is a part of the message
 
     if ':pog-bot MODE pog-bot :+iw' in text:
-        text = ':Guest35!~Guest35@2600:8800:15:3700::18a4 PRIVMSG #CSC482 :pog-bot: dev-join'
+        text = ':Guest35!~Guest35@2600:8800:15:3700::18a4 PRIVMSG #bkwe123 :pog-bot: dev-join'
     for t in text.split(maxsplit=3):
         text_p.append(t)
 
@@ -141,7 +142,7 @@ def response_filter(text: str):
         return None, None, None, None
     if text_p[1] != 'PRIVMSG':
         return None, None, None, None
-    if text_p[2] != '#CSC482':
+    if text_p[2] != '#bkwe123':
         return None, None, None, None
     if f':{botnick}: ' not in text_p[3]:  # format for mentioning botnick
         return None, None, None, None
