@@ -67,3 +67,7 @@ Phase 3:
 Jeremiah Q/A
 pog-bot: Translate this into German: Good Night
 cirque: "good night" to german is "gute nacht"
+
+Brandon Q/A
+pog-bot: When was Xi Jinping born?
+bkwe: 15 June 1953
