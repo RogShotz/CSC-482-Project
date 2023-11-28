@@ -17,6 +17,7 @@ nba_team_names = ['Atlanta Hawks', 'Boston Celtics', 'Brooklyn Nets', 'Charlotte
 lemmatizer = stem.WordNetLemmatizer()
 
 def yaniv_bot(irc, msg, sender, channel):
+    print(msg)
     if 'nba:' not in msg:
         return
 
@@ -40,14 +41,14 @@ def yaniv_bot(irc, msg, sender, channel):
             verb_executor = None
         if pos in ('propn', 'noun') and text.isalpha():
             propn = text.lower()
-
+    print('propn', propn)
     if propn is None:
         return
 
     team_name = [name for name in nba_team_names if propn in name.lower()]
     if not team_name:
         return
-
+    print('team_name', team_name, propn)
     team_name = team_name[0]
     date_components = date.split('/')
     preposition = 'in' if len(date) == 4 else 'on'

@@ -126,7 +126,7 @@ def main():
                 channel, f"{sender}: Brandon's Q/A can also answer questions about birthdays. Just ask: 'When was [name] born?")
             irc.send(
                 channel, f"{sender}: Yaniv's Q/A can also answer questions about NBA game outcomes between the 2015 season to the 2022 season.")
-            irc.send(channel, f"{sender}: Just ask questions along the lines of: 'NBA: Who [beat/won against/defeated/lost to/lost against/fell to] [NBA team] on [date]?', 'NBA: Who did [NBA team] [beat/win against/defeat/lose to/fall to] on [date]?', 'NBA: Who did [NBA team] play against on [date]?', or 'NBA: Who played against [NBA team] on [date]?' The dates can be entered in one of the following forms: MM/DD/YYYY, MM/YYYY, or YYYY.")
+            irc.send(channel, f"{sender}: Just ask questions along the lines of: `NBA: Who [beat/won against/defeated/lost to/lost against/fell to] [NBA team] on [date]?`, `NBA: Who did [NBA team] [beat/win against/defeat/lose to/fall to] on [date]?`, `NBA: Who did [NBA team] play against on [date]?`, or `NBA: Who played against [NBA team] on [date]?` The dates can be entered in one of the following forms: `MM/DD/YYYY`, `MM/YYYY`, or `YYYY`.")
         elif msg == 'users':
             users = user_list(irc)
             irc.send(channel, f"{sender}: {users}")
