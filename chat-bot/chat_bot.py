@@ -115,6 +115,8 @@ def main():
             # TODO: Update when done with phase 3
             irc.send(
                 channel, f"{sender}: I can answer questions about mice! Ask me a question like this: 'Can a mouse defeat a cat in battle?'")
+            irc.send(
+                channel, f"{sender}: I can also answer questions about birthdays. Just ask: 'When was [name] born?")
         elif msg == 'users':
             users = user_list(irc)
             irc.send(channel, f"{sender}: {users}")
