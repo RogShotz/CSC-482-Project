@@ -43,6 +43,8 @@ def main():
         if time.time() - start_time >= 15:
             if state == 'START':  # For targetting a person for conversation.
                 u_list = user_list(irc).split(', ')
+                if not u_list: # incase we u_lists response gets missed
+                    continue
                 u_list.remove(botnick)
                 convo_target = random.choice(u_list)
                 irc.send(channel, f"{convo_target}: Hello :)")
@@ -112,15 +114,16 @@ def main():
         elif msg == 'who are you?' or msg == 'usage':
             irc.send(
                 channel, f"{sender}: My name is {botnick}. I was created by Luke Rowe, Brandon Kwe, Yaniv Sagy, and Jeremiah Lee, CSC 482-03")
-            # TODO: Update when done with phase 3
             irc.send(
-                channel, f"{sender}: I can answer questions about mice! Ask me a question like this: 'Can a mouse defeat a cat in battle?'")
+                channel, f"{sender}: Lukes Q/A can be used by asking a question with `who` and `president` along with `a number` that can be both numerical or ordinal, i.e. first, second, third.")
             irc.send(
-                channel, f"{sender}: I can also answer questions about birthdays. Just ask: 'When was [name] born?")
+                channel, f"{sender}: It can also be queried by saying `tell me more about ` and a presidents name you want, it can be impercise.")
+            irc.send(
+                channel, f"{sender}: Brandons Q/A can also answer questions about birthdays. Just ask: 'When was [name] born?")
         elif msg == 'users':
             users = user_list(irc)
             irc.send(channel, f"{sender}: {users}")
-        elif msg != 'dev-pass':
+        elif msg != 'dev-pass' and state == 'START':
             phase_3(irc, msg, sender)
 
 
