@@ -17,7 +17,6 @@ nba_team_names = ['Atlanta Hawks', 'Boston Celtics', 'Brooklyn Nets', 'Charlotte
 lemmatizer = stem.WordNetLemmatizer()
 
 def yaniv_bot(irc, msg, sender, channel):
-    print('msg', msg)
     global df_nba
 
     doc = nlp(msg)
@@ -27,20 +26,18 @@ def yaniv_bot(irc, msg, sender, channel):
     propn = None
     for token in doc:
         text, dep, head_text, pos, index = token.text, token.dep_.lower(), token.head.text, token.pos_.lower(), token.i
-        print(text, dep, head_text, pos, index, '\n')
+
         if pos == 'num' or (pos in ('propn', 'noun') and not text.isalpha()):
             date = text
         if pos == 'verb':
             verb = text
         if dep == 'nsubj' and pos in ('propn', 'noun'):
-            print('verb_executor', verb_executor)
             verb_executor = text
         if (dep == 'dobj' or dep == 'pobj') and pos in ('propn', 'noun') and text.isalpha():
             verb_executor = None
         if pos in ('propn', 'noun') and text.isalpha():
             propn = text.lower()
 
-    print('propn', propn, verb_executor)
     if propn is None:
         return
 
@@ -66,7 +63,6 @@ def yaniv_bot(irc, msg, sender, channel):
     if lemmatizer.lemmatize(verb) in ('beat', 'win', 'won', 'defeated', 'defeat'):
         if verb_executor:
             relevant_nba_data = df_dates[((df_dates['visitor_team'].str.contains(team_name)) & (df_dates['visitor_team_points'] > df_dates['home_team_points'])) | ((df_dates['home_team'].str.contains(team_name)) & (df_dates['home_team_points'] > df_dates['visitor_team_points']))]
-            print(1, team_name, relevant_nba_data)
 
             if len(relevant_nba_data) == 0:
                 message_content = f'It appears that the {team_name} didn\'t win any games {preposition} {date}.\n'
@@ -77,7 +73,6 @@ def yaniv_bot(irc, msg, sender, channel):
                 message_content = f'The {team_name} won {len(relevant_nba_data)} game(s) {preposition} {date}. The opponents and final scores were:\n' + message_content
         else:
             relevant_nba_data = df_dates[((df_dates['visitor_team'].str.contains(team_name)) & (df_dates['visitor_team_points'] < df_dates['home_team_points'])) | ((df_dates['home_team'].str.contains(team_name)) & (df_dates['home_team_points'] < df_dates['visitor_team_points']))]
-            print(2, team_name, relevant_nba_data)
 
             if len(relevant_nba_data) == 0:
                 message_content = f'It appears that the {team_name} didn\'t lose any games {preposition} {date}.\n'
@@ -128,7 +123,7 @@ def yaniv_bot(irc, msg, sender, channel):
             message_content = f'The {team_name} played {len(relevant_nba_data)} game(s) {preposition} {date}. They won {win_count} game(s) and lost {lose_count} game(s) during this time. The final scores were:\n' + message_content
     else:
         message_content = 'Sorry, I don\'t understand your question :(. Please try to rephrase it!\n'
-    print(f"{sender}: {message_content}")
+
     for line in message_content.split('\n')[:-1]:
         irc.send(channel, f"{sender}: {line}")
     return
