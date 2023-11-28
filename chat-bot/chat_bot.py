@@ -42,7 +42,7 @@ def main():
         if time.time() - start_time >= 15:
             if state == 'START':  # For targetting a person for conversation.
                 u_list = user_list(irc).split(', ')
-                u_list.remove('pog-bot')
+                u_list.remove(botnick)
                 convo_target = random.choice(u_list)
                 irc.send(channel, f"{convo_target}: Hello :)")
                 state = states[1]
@@ -110,7 +110,7 @@ def main():
             state = states[0]
         elif msg == 'who are you?' or msg == 'usage':
             irc.send(
-                channel, f"{sender}: My name is pog-bot. I was created by Luke Rowe, Brandon Kwe, Yaniv Sagy, and Jeremiah Lee, CSC 482-03")
+                channel, f"{sender}: My name is {botnick}. I was created by Luke Rowe, Brandon Kwe, Yaniv Sagy, and Jeremiah Lee, CSC 482-03")
             # TODO: Update when done with phase 3
             irc.send(
                 channel, f"{sender}: I can answer questions about mice! Ask me a question like this: 'Can a mouse defeat a cat in battle?'")
@@ -122,20 +122,23 @@ def main():
 
 
 def phase_3(irc, msg, sender, channel=channel):
+    """
+    Phase 3 implements, allow each member to run code individually and creates a dedicated module area to do so.
+    """
     luke_bot.luke_bot(irc, msg, sender, channel)
     yaniv_bot.yaniv_bot(irc, msg, sender, channel)
 
 
 def response_filter(text: str):
     """
-    Break a given text into components and
-    return either the sanitized text components or a 4-tuple None for naughty inputs.
+    Break a given response into components.
+    Return either the sanitized text components or a 4-tuple None for naughty inputs.
     """
     text_p = []  # sender, type, target, message
     # everything after 3 is a part of the message
 
-    if ':pog-bot MODE pog-bot :+iw' in text:
-        text = ':Guest35!~Guest35@2600:8800:15:3700::18a4 PRIVMSG #CSC482 :pog-bot: dev-join'
+    if f':{botnick} MODE {botnick} :+iw' in text:
+        text = f':Guest35!~Guest35@2600:8800:15:3700::18a4 PRIVMSG {channel} :{botnick}: dev-join'
     for t in text.split(maxsplit=3):
         text_p.append(t)
 
@@ -143,7 +146,7 @@ def response_filter(text: str):
         return None, None, None, None
     if text_p[1] != 'PRIVMSG':
         return None, None, None, None
-    if text_p[2] != '#CSC482':
+    if text_p[2] != channel:
         return None, None, None, None
     if f':{botnick}: ' not in text_p[3]:  # format for mentioning botnick
         return None, None, None, None
@@ -159,7 +162,10 @@ def response_filter(text: str):
 
 
 def user_list(irc: IRC):
-    """Issue a NAME command and return usernames in a string."""
+    """
+    Issue a NAME command to the channel and sanitize the response.
+    Return usernames in a string.
+    """
     irc.command(f"NAMES {channel}")
     text = irc.get_response()
     text = text.split(f'{channel} :')[1]
