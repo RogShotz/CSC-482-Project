@@ -133,7 +133,7 @@ def phase_3(irc, msg, sender, channel=channel):
     """
     luke_bot.luke_bot(irc, msg, sender, channel)
     brandon_bot.brandon_bot(irc, msg, sender, channel)
-    #yaniv_bot.yaniv_bot(irc, msg, sender, channel)
+    yaniv_bot.yaniv_bot(irc, msg, sender, channel)
 
 
 def response_filter(text: str):
