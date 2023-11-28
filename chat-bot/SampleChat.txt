@@ -61,3 +61,9 @@ additionally an example of wildly varying question prompting
 [10:22:57 PM] <pog-bot> Guest35: Harry S. Truman was president #33. They were born, 1884, and died in 1972.
 [10:22:57 PM] <pog-bot> Guest35: They assumed office after the previous president died, then were re-elected in 1948.
 [10:22:57 PM] <pog-bot> Guest35: They served from April 12, 1945-January 20, 1953 with Vacant: through January 20, 1949 and Alben W. Barkley as their VP, their parties were Democratic respectively.
+
+
+Phase 3:
+Jeremiah Q/A
+pog-bot: Translate this into German: Good Night
+cirque: "good night" to german is "gute nacht"
