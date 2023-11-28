@@ -1,15 +1,69 @@
-Username: cirque
+Phase 2:
 
-cirque: Hello :)
-cirque: You there? ;(
-cirque: Fine, I didn't wanna talk anyways :(
-pog-bot: die
-cirque: really? OK, fine.
+[10:09:56 PM] <pog-bot> @Guest35: Hello :)
+[10:10:12 PM] <pog-bot> @Guest35: You there? ;(
+[10:10:28 PM] <pog-bot> @Guest35: Fine, I didn't wanna talk anyways :(
 
-pog-bot: hi
-cirque: hi
-pog-bot: hi
-cirque: Wazzaaaaaaap
+[10:11:00 PM] <pog-bot> @Guest35: Hello :)
+[10:11:15 PM] <pog-bot> @Guest35: You there? ;(
+[10:11:16 PM] <Guest35> pog-bot:hi
+[10:11:17 PM] <pog-bot> @Guest35: how are you?
+[10:11:28 PM] <Guest35> pog-bot: i'm good
+[10:11:49 PM] <Guest35> pog-bot: how about you?
+[10:11:49 PM] <pog-bot> @Guest35: I’m good
 
+[10:12:53 PM] <Guest35> pog-bot: hi
+[10:12:54 PM] <pog-bot> Guest35: hello back at you!
+[10:13:05 PM] <Guest35> pog-bot: how are you?
+[10:13:06 PM] <pog-bot> Guest35: I'm good
+[10:13:06 PM] <pog-bot> Guest35: how about you?
+[10:13:16 PM] <Guest35> pog-bot: i'm good
+
+Phase 3:
+Luke Q/A:
+
+example of a first name only and multiple responses.
+[10:18:29 PM] <Guest35> pog-bot: tell me more about bush
+[10:18:30 PM] <pog-bot> Guest35: Here is some more info about president number 41.
+[10:18:30 PM] <pog-bot> Guest35: They were elected 1988.
+[10:18:30 PM] <pog-bot> Guest35: They served from January 20, 1989-January 20, 1993 with Dan Quayle as their VP, their parties were Republican respectively.
+[10:18:30 PM] <pog-bot> Guest35: George H. W. Bush was president #41. They were born, 1924, and died in 2018.
+[10:18:30 PM] <pog-bot> Guest35: They served from January 20, 2001-January 20, 2009 with Dick Cheney as their VP, their parties were Republican respectively.
+[10:18:30 PM] <pog-bot> Guest35: George W. Bush was president #43. They were born, 1946, and are still alive.
+[10:18:30 PM] <pog-bot> Guest35: Here is some more info about president number 43.
+[10:18:31 PM] <pog-bot> Guest35: They were elected 2000 and 2004.
+
+example of ordinal numbers.
+[10:19:08 PM] <Guest35> pog-bot: who was the thirty first pres?
+[10:19:08 PM] <pog-bot> Guest35: Here is some more info about president number 31.
+[10:19:09 PM] <pog-bot> Guest35: Herbert Hoover was president #31. They were born, 1874, and died in 1964.
+[10:19:09 PM] <pog-bot> Guest35: They were elected 1928.
+[10:19:09 PM] <pog-bot> Guest35: They served from March 4, 1929-March 4, 1933 with Charles Curtis as their VP, their parties were Republican respectively.
+
+example of a complicated wiki page... Nixon.
+[10:20:14 PM] <Guest35> pog-bot: who was the president that was number 37?
+[10:20:15 PM] <pog-bot> Guest35: Richard Nixon was president #37. They were born, 1913, and died in 1994.
+[10:20:15 PM] <pog-bot> Guest35: Here is some more info about president number 37.
+[10:20:15 PM] <pog-bot> Guest35: They served from January 20, 1969-August 9, 1974<resign> with Spiro Agnew<resign> and Vacant: October 10: December 6, 1973 and Gerald Ford<newVP> as their VP, their parties were Republican respectively.
+[10:20:15 PM] <pog-bot> Guest35: They were elected 1968 and 1972.
+
+example of varying outputs like if they are still alive.
+[10:21:04 PM] <Guest35> pog-bot: who was the president that was number 45?
+[10:21:04 PM] <pog-bot> Guest35: Here is some more info about president number 45.
+[10:21:04 PM] <pog-bot> Guest35: They were elected 2016.
+[10:21:04 PM] <pog-bot> Guest35: They served from January 20, 2017-January 20, 2021 with Mike Pence as their VP, their parties were Republican respectively.
+[10:21:04 PM] <pog-bot> Guest35: Donald Trump was president #45. They were born, 1946, and are still alive.
+
+example of difference after previous person died in office and they took over from VP to President
+additionally an example of wildly varying question prompting
+[10:22:56 PM] <Guest35> pog-bot: who was the president that was number 33?
+[10:22:56 PM] <pog-bot> Guest35: Here is some more info about president number 33.
+[10:22:57 PM] <pog-bot> Guest35: Harry S. Truman was president #33. They were born, 1884, and died in 1972.
+[10:22:57 PM] <pog-bot> Guest35: They assumed office after the previous president died, then were re-elected in 1948.
+[10:22:57 PM] <pog-bot> Guest35: They served from April 12, 1945-January 20, 1953 with Vacant: through January 20, 1949 and Alben W. Barkley as their VP, their parties were Democratic respectively.
+
+
+Phase 3:
+Jeremiah Q/A
 pog-bot: Translate this into German: Good Night
 cirque: "good night" to german is "gute nacht"
