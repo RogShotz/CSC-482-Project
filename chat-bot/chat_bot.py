@@ -9,7 +9,7 @@ from phase_3.yaniv_bot import yaniv_bot
 server = "irc.libera.chat" 	# Provide a valid server IP/Hostname
 port = 6667
 channel = "#CSC482"
-botnick = "pog-bot645"
+botnick = "pog-bot"
 botnickpass = ""		# in case you have a registered nickname
 botpass = ""			# in case you have a registered bot
 states = ['START',  # 1 indicates first bot speaker, 2 indicates second bot speaker
@@ -42,7 +42,7 @@ def main():
         if time.time() - start_time >= 15:
             if state == 'START':  # For targetting a person for conversation.
                 u_list = user_list(irc).split(', ')
-                u_list.remove('pog-bot645')
+                u_list.remove('pog-bot')
                 convo_target = random.choice(u_list)
                 irc.send(channel, f"{convo_target}: Hello :)")
                 state = states[1]
@@ -110,7 +110,7 @@ def main():
             state = states[0]
         elif msg == 'who are you?' or msg == 'usage':
             irc.send(
-                channel, f"{sender}: My name is pog-bot645. I was created by Luke Rowe, Brandon Kwe, Yaniv Sagy, and Jeremiah Lee, CSC 482-03")
+                channel, f"{sender}: My name is pog-bot. I was created by Luke Rowe, Brandon Kwe, Yaniv Sagy, and Jeremiah Lee, CSC 482-03")
             # TODO: Update when done with phase 3
             irc.send(
                 channel, f"{sender}: I can answer questions about mice! Ask me a question like this: 'Can a mouse defeat a cat in battle?'")
@@ -134,8 +134,8 @@ def response_filter(text: str):
     text_p = []  # sender, type, target, message
     # everything after 3 is a part of the message
 
-    if ':pog-bot645 MODE pog-bot645 :+iw' in text:
-        text = ':Guest35!~Guest35@2600:8800:15:3700::18a4 PRIVMSG #CSC482 :pog-bot645: dev-join'
+    if ':pog-bot MODE pog-bot :+iw' in text:
+        text = ':Guest35!~Guest35@2600:8800:15:3700::18a4 PRIVMSG #CSC482 :pog-bot: dev-join'
     for t in text.split(maxsplit=3):
         text_p.append(t)
 
