@@ -4,3 +4,4 @@ pandas
 os
 spacy
 nltk
+libretranslate

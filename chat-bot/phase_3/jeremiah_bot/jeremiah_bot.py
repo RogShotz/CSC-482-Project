@@ -6,7 +6,7 @@ and give a response in the specified language (or enlgish if not specified)
 """
 
 import requests, subprocess, time, re
-#packages langid, langcodes, libretranslate
+#packages libretranslate
 
 class LibreTranslateAPI:
     def __init__(self, api_url="http://localhost:5000/"):

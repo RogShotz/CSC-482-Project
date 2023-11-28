@@ -5,6 +5,7 @@ import random
 from phase_3.luke_bot import luke_bot
 from phase_3.yaniv_bot import yaniv_bot
 from phase_3.brandon_bot import brandon_bot
+from phase_3.jeremiah_bot import jeremiah_bot
 
 # IRC Config
 server = "irc.libera.chat" 	# Provide a valid server IP/Hostname
@@ -141,6 +142,7 @@ def phase_3(irc, msg, sender, channel=channel):
     luke_bot.luke_bot(irc, msg, sender, channel)
     brandon_bot.brandon_bot(irc, msg, sender, channel)
     yaniv_bot.yaniv_bot(irc, msg, sender, channel)
+    jeremiah_bot.jeremiah_bot(irc, msg, sender, channel)
 
 
 def response_filter(text: str):
