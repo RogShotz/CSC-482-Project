@@ -43,10 +43,11 @@ def main():
             print(f'passed: {state}')
         if time.time() - start_time >= 15:
             if state == 'START':  # For targetting a person for conversation.
-                u_list = user_list(irc).split(', ')
-                if not u_list:  # incase we u_lists response gets missed
-                    continue
-                u_list.remove(botnick)
+                u_list = []
+                while not u_list: # run until a good user list is returned
+                    u_list = user_list(irc).split(', ')
+                    u_list.remove(botnick)
+
                 convo_target = random.choice(u_list)
                 irc.send(channel, f"{convo_target}: Hello :)")
                 state = states[1]
@@ -184,8 +185,11 @@ def user_list(irc: IRC):
     Issue a NAME command to the channel and sanitize the response.
     Return usernames in a string.
     """
-    irc.command(f"NAMES {channel}")
-    text = irc.get_response()
+    text = ''
+    while botnick not in text or 'End of /NAMES list' in text: # run until a good /NAMES cmd is returned
+        irc.command(f"NAMES {channel}")
+        text = irc.get_response()
+    print(text)
     text = text.split(f'{channel} :')[1]
     text = text.split(':')[0]
     text = text.split()
