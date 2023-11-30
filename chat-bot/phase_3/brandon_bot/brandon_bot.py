@@ -5,7 +5,7 @@ wiki_wiki = wikipediaapi.Wikipedia('MyProjectName (merlin@example.com)', 'en')
 
 def brandon_bot(irc, msg, sender, channel):
     if re.search('when was [a-zA-Z ]+ born\?', msg):
-        name = ' '.join(msg.split()[2:-1])
+        name = ' '.join(msg.split()[2:-1]).title()
         
         page_py = wiki_wiki.page(name)
         summary = page_py.summary
