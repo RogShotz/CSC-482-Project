@@ -10,8 +10,8 @@ from phase_3.jeremiah_bot import jeremiah_bot
 # IRC Config
 server = "irc.libera.chat" 	# Provide a valid server IP/Hostname
 port = 6667
-channel = "#CSC482"
-botnick = "pog-bot"
+channel = "#CSC482b"
+botnick = "pog-bot2"
 botnickpass = ""		# in case you have a registered nickname
 botpass = ""			# in case you have a registered bot
 states = ['START',  # 1 indicates first bot speaker, 2 indicates second bot speaker
@@ -36,7 +36,7 @@ def main():
 
     while True:
         print('waiting...', end='')
-        text = irc.get_response()
+        text = irc.get_response(4)
         sender, m_type, m_tar, msg = response_filter(text)
         # Timer must go before rejection so that it is being updated per timeout as well.
         if msg == 'dev-pass':
@@ -141,7 +141,7 @@ def main():
 def phase_3(irc, msg, sender, channel=channel):
     """
     Phase 3 implements, allow each member to run code individually and creates a dedicated module area to do so.
-    """
+    """ 
     luke_bot.luke_bot(irc, msg, sender, channel)
     brandon_bot.brandon_bot(irc, msg, sender, channel)
     yaniv_bot.yaniv_bot(irc, msg, sender, channel)
@@ -188,14 +188,14 @@ def user_list(irc: IRC):
     text = ''
     while botnick not in text or 'End of /NAMES list' in text: # run until a good /NAMES cmd is returned
         irc.command(f"NAMES {channel}")
-        text = irc.get_response()
-    print(text)
+        text = irc.get_response(0) # Waiting for next response can get overrun by spam, could beat serv. resp for cmd
     text = text.split(f'{channel} :')[1]
     text = text.split(':')[0]
     text = text.split()
     output = []
     for t in text:
         output.append(t)
+    print(f'USER CMD: {text}')
     return ", ".join(output)
 
 
