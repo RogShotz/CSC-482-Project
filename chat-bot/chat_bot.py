@@ -10,8 +10,8 @@ from phase_3.jeremiah_bot import jeremiah_bot
 # IRC Config
 server = "irc.libera.chat" 	# Provide a valid server IP/Hostname
 port = 6667
-channel = "#CSC482b"
-botnick = "pog-bot2"
+channel = "#CSC482"
+botnick = "pog-bot"
 botnickpass = ""		# in case you have a registered nickname
 botpass = ""			# in case you have a registered bot
 states = ['START',  # 1 indicates first bot speaker, 2 indicates second bot speaker
